@@ -12,9 +12,9 @@ class SearchCVC: UICollectionViewCell {
     // MARK: Properties
     static let identifier = "SearchCVC"
     
+    // MARK: UI Component
     private let imageView: UIImageView = {
         var imageView = UIImageView()
-        imageView.backgroundColor = .cyan
         return imageView
     }()
     

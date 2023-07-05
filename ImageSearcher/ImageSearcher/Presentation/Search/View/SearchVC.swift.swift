@@ -6,14 +6,19 @@
 //
 
 import UIKit
+import Combine
 
-class SearchVC: UIViewController, UISearchResultsUpdating {
+class SearchVC: UIViewController {
     
     // MARK: Properties
     static let identifier = "SearchVC"
     
-    private let image = ["1", "2", "3", "4", "5", "6", "7", "8"]
+    var imageList = [String]()
     
+    var imageVM: SearchVM = SearchVM()
+    var disposalbleBag = Set<AnyCancellable>()
+    
+    // MARK: UI Component
     private let imageCV:  UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets.init(top: 3 , left: 3, bottom: 0, right: 3)
@@ -29,6 +34,7 @@ class SearchVC: UIViewController, UISearchResultsUpdating {
         setUI()
         setConstraint()
         setDelegate()
+        setBindings()
     }
 }
 
@@ -55,11 +61,22 @@ extension SearchVC {
         searchController.searchBar.placeholder = "Search images"
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.title = "Image Search"
+    }
+}
+
+// MARK: - View Model
+extension SearchVC {
+    
+    private func setBindings() {
+        self.imageVM.$imageList.sink { (updatedList : [String]) in
+            self.imageList = updatedList
+            self.imageCV.reloadData()
+        }.store(in: &disposalbleBag)
     }
 }
 
@@ -73,20 +90,21 @@ extension SearchVC {
     }
 }
 
-// MARK: - UISearchController
-extension SearchVC {
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else { return }
-        print(text)
+// MARK: - UISearchBarDelegate
+extension SearchVC: UISearchBarDelegate {
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text else { return }
+        self.imageVM.getImageList(input: text)
     }
-    
 }
 
 // MARK: - UICollectionViewDataSource
 extension SearchVC: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return image.count
+        return imageList.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -100,6 +118,7 @@ extension SearchVC: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension SearchVC: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
