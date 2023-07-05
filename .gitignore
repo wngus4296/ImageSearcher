@@ -103,6 +103,9 @@ PomeInfo.plist
 ### DS_Store ###
 .DS_Store
 
+## API_KEY
+*.xcconfig
+
 
 ## Gcc Patch
 /*.gcno
