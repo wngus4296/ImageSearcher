@@ -13,7 +13,7 @@ class SearchVC: UIViewController {
     // MARK: Properties
     static let identifier = "SearchVC"
     
-    var imageList = [String]()
+    var imageList = [ImageEntity]()
     
     var imageVM: SearchVM = SearchVM()
     var disposalbleBag = Set<AnyCancellable>()
@@ -73,7 +73,7 @@ extension SearchVC {
 extension SearchVC {
     
     private func setBindings() {
-        self.imageVM.$imageList.sink { (updatedList : [String]) in
+        self.imageVM.$imageList.sink { (updatedList : [ImageEntity]) in
             self.imageList = updatedList
             self.imageCV.reloadData()
         }.store(in: &disposalbleBag)

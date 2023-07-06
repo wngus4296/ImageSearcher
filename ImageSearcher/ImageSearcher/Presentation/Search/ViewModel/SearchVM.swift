@@ -12,9 +12,9 @@ import Combine
 class SearchVM: ObservableObject {
     
     // MARK: Properties
-    @Published var imageList = [String]()
+    @Published var imageList = [ImageEntity]()
     
-    private let service = ImageSearchService()
+    private let imageRepository = ImageRepository()
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: Life Cycle
@@ -25,7 +25,7 @@ class SearchVM: ObservableObject {
 extension SearchVM {
 
     func getImageList(input: String) {
-        service.searchImages(query: input)
+        imageRepository.searchImages(query: input)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
@@ -34,8 +34,8 @@ extension SearchVM {
                 case .failure(let error):
                     print("Error: \(error)")
                 }
-            }, receiveValue: { [weak self] (result: ImageResModel) in
-                self?.imageList = result.documents.map { $0.imageURL }
+            }, receiveValue: { [weak self] (result: SearchImageResModel) in
+                self?.imageList = result.documents.map { return ImageEntity(imageURL: $0.imageURL) }
             })
             .store(in: &cancellables)
         
