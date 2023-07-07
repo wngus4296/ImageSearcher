@@ -10,6 +10,8 @@
 		8479BDFE2A55A23100A5FEDF /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479BDFD2A55A23100A5FEDF /* ImageRepository.swift */; };
 		8479BDFF2A55B04600A5FEDF /* SearchImageResModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479BDF82A55934C00A5FEDF /* SearchImageResModel.swift */; };
 		8479BE112A566B7900A5FEDF /* ImageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479BE102A566B7900A5FEDF /* ImageEntity.swift */; };
+		8479BE142A57A1CD00A5FEDF /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479BE132A57A1CD00A5FEDF /* ImageCacheManager.swift */; };
+		8479BE172A57AA0300A5FEDF /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479BE162A57AA0300A5FEDF /* UIImageView+.swift */; };
 		84DD82E92A55095700A32F64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DD82E82A55095700A32F64 /* AppDelegate.swift */; };
 		84DD82EB2A55095700A32F64 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DD82EA2A55095700A32F64 /* SceneDelegate.swift */; };
 		84DD82ED2A55095700A32F64 /* SearchVC.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DD82EC2A55095700A32F64 /* SearchVC.swift.swift */; };
@@ -24,6 +26,8 @@
 		8479BDFD2A55A23100A5FEDF /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
 		8479BE002A55B0E200A5FEDF /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		8479BE102A566B7900A5FEDF /* ImageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEntity.swift; sourceTree = "<group>"; };
+		8479BE132A57A1CD00A5FEDF /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		8479BE162A57AA0300A5FEDF /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		84DD82E52A55095700A32F64 /* ImageSearcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageSearcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84DD82E82A55095700A32F64 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84DD82EA2A55095700A32F64 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +99,31 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
+		8479BE122A57A1B600A5FEDF /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				8479BE182A57AA2400A5FEDF /* Class */,
+				8479BE152A57A9EC00A5FEDF /* Extension */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		8479BE152A57A9EC00A5FEDF /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				8479BE162A57AA0300A5FEDF /* UIImageView+.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		8479BE182A57AA2400A5FEDF /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				8479BE132A57A1CD00A5FEDF /* ImageCacheManager.swift */,
+			);
+			path = Class;
+			sourceTree = "<group>";
+		};
 		84DD82DC2A55095700A32F64 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +144,7 @@
 		84DD82E72A55095700A32F64 /* ImageSearcher */ = {
 			isa = PBXGroup;
 			children = (
+				8479BE122A57A1B600A5FEDF /* Global */,
 				84DD82FD2A55098300A32F64 /* Application */,
 				8479BDF42A5591D500A5FEDF /* Data */,
 				8479BE0E2A566B5000A5FEDF /* Domain */,
@@ -241,7 +271,9 @@
 			files = (
 				84DD82ED2A55095700A32F64 /* SearchVC.swift.swift in Sources */,
 				8479BDFE2A55A23100A5FEDF /* ImageRepository.swift in Sources */,
+				8479BE142A57A1CD00A5FEDF /* ImageCacheManager.swift in Sources */,
 				84DD82E92A55095700A32F64 /* AppDelegate.swift in Sources */,
+				8479BE172A57AA0300A5FEDF /* UIImageView+.swift in Sources */,
 				84DD83052A550D5300A32F64 /* SearchVM.swift in Sources */,
 				8479BE112A566B7900A5FEDF /* ImageEntity.swift in Sources */,
 				84DD83092A5546EB00A32F64 /* SearchCVC.swift in Sources */,

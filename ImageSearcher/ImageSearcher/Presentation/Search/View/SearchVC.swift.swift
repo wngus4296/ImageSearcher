@@ -110,7 +110,7 @@ extension SearchVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCVC.identifier, for: indexPath) as? SearchCVC else { return UICollectionViewCell() }
-        cell.backgroundColor = .blue
+        cell.setImage(imageList[indexPath[1]].imageURL)
         return cell
     }
     
@@ -123,8 +123,8 @@ extension SearchVC: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let interval:CGFloat = 3
-        let width: CGFloat = ( UIScreen.main.bounds.width - interval * 4 ) / 3
-        return CGSize(width: width , height: width )
+        let width: CGFloat = (UIScreen.main.bounds.width - interval * 4) / 3
+        return CGSize(width: width, height: width)
     }
     
     func collectionView(_ collectionView: UICollectionView,

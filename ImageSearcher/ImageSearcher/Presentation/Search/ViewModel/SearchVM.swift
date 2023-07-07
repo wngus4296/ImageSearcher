@@ -38,6 +38,5 @@ extension SearchVM {
                 self?.imageList = result.documents.map { return ImageEntity(imageURL: $0.imageURL) }
             })
             .store(in: &cancellables)
-        
     }
 }

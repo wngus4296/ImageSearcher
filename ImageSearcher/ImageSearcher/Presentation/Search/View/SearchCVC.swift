@@ -25,6 +25,10 @@ class SearchCVC: UICollectionViewCell {
         setConstraint()
     }
     
+    override func prepareForReuse() {
+        imageView.image = UIImage()
+    }
+
     required init?(coder: NSCoder) {
         fatalError()
     }
@@ -34,7 +38,8 @@ class SearchCVC: UICollectionViewCell {
 extension SearchCVC {
     
     private func setUI() {
-        self.addSubview(imageView)
+        contentView.addSubview(imageView)
+        imageView.contentMode = .scaleAspectFit
     }
     
     private func setConstraint() {
@@ -43,7 +48,15 @@ extension SearchCVC {
           imageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
           imageView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
           imageView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-          imageView.heightAnchor.constraint(equalToConstant: 100)
+          imageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
         ])
+    }
+}
+
+// MARK: - Custom Methods
+extension SearchCVC {
+    
+    func setImage(_ url: String) {
+        imageView.setImageUrl(url)
     }
 }
