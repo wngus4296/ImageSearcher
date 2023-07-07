@@ -39,7 +39,7 @@ extension SearchCVC {
     
     private func setUI() {
         contentView.addSubview(imageView)
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
     }
     
     private func setConstraint() {
