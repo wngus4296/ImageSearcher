@@ -26,7 +26,7 @@ class SearchCVC: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
-        imageView.image = UIImage()
+        imageView.image = nil
     }
 
     required init?(coder: NSCoder) {
