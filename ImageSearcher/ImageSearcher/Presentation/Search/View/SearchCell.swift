@@ -7,10 +7,7 @@
 
 import UIKit
 
-class SearchCVC: UICollectionViewCell {
-    
-    // MARK: Properties
-    static let identifier = "SearchCVC"
+class SearchCell: UICollectionViewCell {
     
     // MARK: UI Component
     private let imageView: UIImageView = {
@@ -30,12 +27,13 @@ class SearchCVC: UICollectionViewCell {
     }
 
     required init?(coder: NSCoder) {
+        super.init(coder: coder)
         fatalError()
     }
 }
 
 // MARK: - UI
-extension SearchCVC {
+extension SearchCell {
     
     private func setUI() {
         contentView.addSubview(imageView)
@@ -45,16 +43,16 @@ extension SearchCVC {
     private func setConstraint() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-          imageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-          imageView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-          imageView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-          imageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+          imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+          imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+          imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+          imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
     }
 }
 
 // MARK: - Custom Methods
-extension SearchCVC {
+extension SearchCell {
     
     func setImage(_ url: String) {
         imageView.setImageUrl(url)

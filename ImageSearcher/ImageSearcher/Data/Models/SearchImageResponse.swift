@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SearchImageResModel: Codable {
+struct SearchImageResponse: Codable {
     let documents: [Document]
     let meta: Meta
 }

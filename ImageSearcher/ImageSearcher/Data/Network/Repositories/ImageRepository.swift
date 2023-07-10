@@ -10,7 +10,8 @@ import Combine
 
 class ImageRepository {
     
-    func searchImages(query: String) -> AnyPublisher<SearchImageResModel, Error> {
+    // 네트워크 레이어는 url, request, method, query
+    func searchImages(query: String) -> AnyPublisher<SearchImageResponse, Error> {
         guard let url = URL(string: "https://dapi.kakao.com/v2/search/image?query=\(query)") else {
             return Fail(error: NSError(domain: "Invalid URL", code: 0, userInfo: nil))
                 .eraseToAnyPublisher()
@@ -29,7 +30,7 @@ class ImageRepository {
                 }
                 return data
             }
-            .decode(type: SearchImageResModel.self, decoder: JSONDecoder())
+            .decode(type: SearchImageResponse.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
     }
 }

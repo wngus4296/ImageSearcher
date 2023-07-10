@@ -8,18 +8,17 @@
 import UIKit
 import Combine
 
-class SearchVC: UIViewController {
+class SearchViewController: UIViewController {
     
     // MARK: Properties
-    static let identifier = "SearchVC"
+    var images = [ImageEntity]()
     
-    var imageList = [ImageEntity]()
+    var viewModel: SearchViewModel = SearchViewModel()
+    var cancellables = Set<AnyCancellable>()
     
-    var imageVM: SearchVM = SearchVM()
-    var disposalbleBag = Set<AnyCancellable>()
     
     // MARK: UI Component
-    private let imageCV:  UICollectionView = {
+    private let imageCollectionView:  UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets.init(top: 3 , left: 3, bottom: 0, right: 3)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -39,20 +38,20 @@ class SearchVC: UIViewController {
 }
 
 // MARK: - UI
-extension SearchVC {
+extension SearchViewController {
     
     private func setUI() {
         view.backgroundColor = .white
-        view.addSubview(imageCV)
+        view.addSubview(imageCollectionView)
     }
     
     private func setConstraint() {
-        imageCV.translatesAutoresizingMaskIntoConstraints = false
+        imageCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-          imageCV.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-          imageCV.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-          imageCV.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
-          imageCV.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+          imageCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          imageCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          imageCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
+          imageCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
     
@@ -70,54 +69,54 @@ extension SearchVC {
 }
 
 // MARK: - View Model
-extension SearchVC {
+extension SearchViewController {
     
     private func setBindings() {
-        self.imageVM.$imageList.sink { (updatedList : [ImageEntity]) in
-            self.imageList = updatedList
-            self.imageCV.reloadData()
-        }.store(in: &disposalbleBag)
+        viewModel.$images.sink { (updatedList : [ImageEntity]) in
+            self.images = updatedList
+            self.imageCollectionView.reloadData()
+        }.store(in: &cancellables)
     }
 }
 
 // MARK: - Custom Methods
-extension SearchVC {
+extension SearchViewController {
     
     private func setDelegate() {
-        imageCV.register(SearchCVC.self, forCellWithReuseIdentifier: SearchCVC.identifier)
-        imageCV.delegate = self
-        imageCV.dataSource = self
+        imageCollectionView.register(SearchCell.self, forCellWithReuseIdentifier: SearchCell.className)
+        imageCollectionView.delegate = self
+        imageCollectionView.dataSource = self
     }
 }
 
 // MARK: - UISearchBarDelegate
-extension SearchVC: UISearchBarDelegate {
+extension SearchViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else { return }
-        self.imageVM.getImageList(input: text)
+        self.viewModel.getImages(input: text)
     }
 }
 
 // MARK: - UICollectionViewDataSource
-extension SearchVC: UICollectionViewDataSource {
+extension SearchViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return imageList.count
+        return viewModel.images.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCVC.identifier, for: indexPath) as? SearchCVC else { return UICollectionViewCell() }
-        cell.setImage(imageList[indexPath[1]].imageURL)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCell.className, for: indexPath) as? SearchCell else { return UICollectionViewCell() }
+        cell.setImage(images[indexPath[1]].imageUrlString)
         return cell
     }
     
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
-extension SearchVC: UICollectionViewDelegateFlowLayout {
+extension SearchViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,

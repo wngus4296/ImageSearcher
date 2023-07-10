@@ -8,5 +8,5 @@
 import Foundation
 
 struct ImageEntity {
-    let imageURL: String
+    let imageUrlString: String
 }

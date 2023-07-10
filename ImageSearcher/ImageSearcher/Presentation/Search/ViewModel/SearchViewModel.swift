@@ -9,10 +9,10 @@ import Foundation
 import Combine
 
 
-class SearchVM: ObservableObject {
+class SearchViewModel: ObservableObject {
     
     // MARK: Properties
-    @Published var imageList = [ImageEntity]()
+    @Published var images = [ImageEntity]()
     
     private let imageRepository = ImageRepository()
     private var cancellables = Set<AnyCancellable>()
@@ -22,9 +22,9 @@ class SearchVM: ObservableObject {
 }
 
 // MARK: - Custom Methods
-extension SearchVM {
+extension SearchViewModel {
 
-    func getImageList(input: String) {
+    func getImages(input: String) {
         imageRepository.searchImages(query: input)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
@@ -34,8 +34,8 @@ extension SearchVM {
                 case .failure(let error):
                     print("Error: \(error)")
                 }
-            }, receiveValue: { [weak self] (result: SearchImageResModel) in
-                self?.imageList = result.documents.map { return ImageEntity(imageURL: $0.imageURL) }
+            }, receiveValue: { [weak self] (result: SearchImageResponse) in
+                self?.images = result.documents.map { return ImageEntity(imageUrlString: $0.imageURL) }
             })
             .store(in: &cancellables)
     }
