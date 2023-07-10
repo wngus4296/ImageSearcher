@@ -11,8 +11,7 @@ import Combine
 final class SearchViewModel: ObservableObject {
     
     // MARK: Properties
-    @Published var images = [ImageEntity]()
-    
+    let imageSubject = CurrentValueSubject<[ImageEntity], Never>([])
     private let imageRepository = ImageRepository()
     private var cancellables = Set<AnyCancellable>()
     
@@ -34,7 +33,7 @@ extension SearchViewModel {
                     print("Error: \(error)")
                 }
             }, receiveValue: { [weak self] (result: SearchImageResponse) in
-                self?.images = result.documents.map { return ImageEntity(imageUrlString: $0.imageURL) }
+                self?.imageSubject.send(result.documents.map { return ImageEntity(imageUrlString: $0.imageURL) })
             })
             .store(in: &cancellables)
     }

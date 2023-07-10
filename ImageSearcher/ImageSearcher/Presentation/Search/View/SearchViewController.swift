@@ -11,11 +11,8 @@ import Combine
 final class SearchViewController: UIViewController {
     
     // MARK: Properties
-    var images = [ImageEntity]()
-    
     var viewModel: SearchViewModel = SearchViewModel()
     var cancellables = Set<AnyCancellable>()
-    
     
     // MARK: UI Component
     private let imageCollectionView:  UICollectionView = {
@@ -72,10 +69,10 @@ extension SearchViewController {
 extension SearchViewController {
     
     private func setBindings() {
-        viewModel.$images.sink { (updatedList : [ImageEntity]) in
-            self.images = updatedList
+        viewModel.imageSubject.sink(receiveValue: { update in
             self.imageCollectionView.reloadData()
-        }.store(in: &cancellables)
+        })
+            .store(in: &cancellables)
     }
 }
 
@@ -103,13 +100,13 @@ extension SearchViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return viewModel.images.count
+        return viewModel.imageSubject.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCell.className, for: indexPath) as? SearchCell else { return UICollectionViewCell() }
-        cell.setImage(images[indexPath[1]].imageUrlString)
+        cell.setImage(viewModel.imageSubject.value[indexPath.item].imageUrlString)
         return cell
     }
     
@@ -121,8 +118,8 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let interval:CGFloat = 3
-        let width: CGFloat = (UIScreen.main.bounds.width - interval * 4) / 3
+        let interval: CGFloat = 3
+        let width: CGFloat = (collectionView.frame.width - interval * 4) / 3
         return CGSize(width: width, height: width)
     }
     
