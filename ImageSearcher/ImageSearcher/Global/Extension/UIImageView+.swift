@@ -11,9 +11,9 @@ extension UIImageView {
     
     func setImageUrl(_ url: String) {
         let cacheKey = NSString(string: url)
-        let cacheManager = NSCache<NSString, UIImage>()
+        let cacheShared = NSCache<NSString, UIImage>()
          
-         if let cachedImage = cacheManager.object(forKey: cacheKey) {
+         if let cachedImage = cacheShared.object(forKey: cacheKey) {
              self.image = cachedImage
              return
          }
@@ -28,7 +28,7 @@ extension UIImageView {
                  }
                  DispatchQueue.main.async {
                      if let data = data, let image = UIImage(data: data) {
-                         cacheManager.setObject(image, forKey: cacheKey)
+                         cacheShared.setObject(image, forKey: cacheKey)
                          self.image = image
                      }
                  }
