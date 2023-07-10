@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class ImageRepository {
+final class ImageRepository {
     
     // 네트워크 레이어는 url, request, method, query
     func searchImages(query: String) -> AnyPublisher<SearchImageResponse, Error> {

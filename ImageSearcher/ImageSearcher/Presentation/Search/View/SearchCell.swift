@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchCell: UICollectionViewCell {
+final class SearchCell: UICollectionViewCell {
     
     // MARK: UI Component
     private let imageView: UIImageView = {

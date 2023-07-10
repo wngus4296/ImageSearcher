@@ -8,8 +8,7 @@
 import Foundation
 import Combine
 
-
-class SearchViewModel: ObservableObject {
+final class SearchViewModel: ObservableObject {
     
     // MARK: Properties
     @Published var images = [ImageEntity]()
