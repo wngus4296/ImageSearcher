@@ -12,7 +12,7 @@ final class SearchViewModel: ObservableObject {
     
     // MARK: Properties
     let imageSubject = CurrentValueSubject<[ImageEntity], Never>([])
-    private let imageRepository = ImageRepository()
+    private let networkService = NetworkService()
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: Life Cycle
@@ -23,7 +23,7 @@ final class SearchViewModel: ObservableObject {
 extension SearchViewModel {
 
     func getImages(input: String) {
-        imageRepository.searchImages(query: input)
+        networkService.request(ImageEndpoint.getImages(input: input))
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
