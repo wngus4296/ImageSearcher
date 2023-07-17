@@ -11,8 +11,8 @@ import Combine
 final class SearchViewController: UIViewController {
     
     // MARK: Properties
-    var viewModel: SearchViewModel = SearchViewModel()
-    var cancellables = Set<AnyCancellable>()
+    private var viewModel: SearchViewModel
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: UI Component
     private let imageCollectionView:  UICollectionView = {
@@ -23,9 +23,24 @@ final class SearchViewController: UIViewController {
     }()
     
     // MARK: Life Cycle
+    init(viewModel: SearchViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        self.viewModel = SearchViewModel(networkService: NetworkService())
+        super.init(coder: coder)
+        setSearchController()
+        setUI()
+        setConstraint()
+        setDelegate()
+        setBindings()
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setSearchController()
         setUI()
         setConstraint()
@@ -69,7 +84,9 @@ extension SearchViewController {
 extension SearchViewController {
     
     private func setBindings() {
-        viewModel.imageSubject.sink(receiveValue: { update in
+        viewModel.imageSubject
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { update in
             self.imageCollectionView.reloadData()
         })
             .store(in: &cancellables)
