@@ -23,12 +23,14 @@ final class SearchCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         imageView.image = nil
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        fatalError()
+        setUI()
+        setConstraint()
     }
 }
 

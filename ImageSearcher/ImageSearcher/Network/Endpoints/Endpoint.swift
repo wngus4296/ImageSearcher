@@ -29,7 +29,7 @@ extension Endpoint {
         request.httpMethod = httpMethod.rawValue
         
         request = self.makeHeaderForRequest(to: request)
-        return try! self.makeParameterForRequest(to: request, with: url)
+        return try? self.makeParameterForRequest(to: request, with: url)
     }
     
     private func makeHeaderForRequest(to request: URLRequest) -> URLRequest {

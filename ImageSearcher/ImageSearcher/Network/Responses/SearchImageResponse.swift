@@ -13,14 +13,14 @@ struct SearchImageResponse: Codable {
 }
 
 struct Document: Codable {
-    let collection: String
-    let datetime: String
-    let displaySitename: String
-    let docURL: String
-    let height: Int
-    let imageURL: String
-    let thumbnailURL: String
-    let width: Int
+    let collection: String?
+    let datetime: String?
+    let displaySitename: String?
+    let docURL: String?
+    let height: Int?
+    let imageURL: String?
+    let thumbnailURL: String?
+    let width: Int?
 
     enum CodingKeys: String, CodingKey {
         case collection, datetime
@@ -31,16 +31,35 @@ struct Document: Codable {
         case thumbnailURL = "thumbnail_url"
         case width
     }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.collection = try container.decodeIfPresent(String.self, forKey: .collection)
+        self.datetime = try container.decodeIfPresent(String.self, forKey: .datetime)
+        self.displaySitename = try container.decodeIfPresent(String.self, forKey: .displaySitename)
+        self.docURL = try container.decodeIfPresent(String.self, forKey: .docURL)
+        self.height = try container.decodeIfPresent(Int.self, forKey: .height)
+        self.imageURL = try container.decodeIfPresent(String.self, forKey: .imageURL)
+        self.thumbnailURL = try container.decodeIfPresent(String.self, forKey: .thumbnailURL)
+        self.width = try container.decodeIfPresent(Int.self, forKey: .width)
+    }
 }
 
 struct Meta: Codable {
-    let isEnd: Bool
-    let pageableCount: Int
-    let totalCount: Int
+    let isEnd: Bool?
+    let pageableCount: Int?
+    let totalCount: Int?
     
     enum CodingKeys: String, CodingKey {
         case isEnd = "is_end"
         case pageableCount = "pageable_count"
         case totalCount = "total_count"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.isEnd = try container.decodeIfPresent(Bool.self, forKey: .isEnd)
+        self.pageableCount = try container.decodeIfPresent(Int.self, forKey: .pageableCount)
+        self.totalCount = try container.decodeIfPresent(Int.self, forKey: .totalCount)
     }
 }

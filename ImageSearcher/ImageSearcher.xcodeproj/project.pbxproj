@@ -148,8 +148,8 @@
 		84DD82E72A55095700A32F64 /* ImageSearcher */ = {
 			isa = PBXGroup;
 			children = (
-				8479BE122A57A1B600A5FEDF /* Global */,
 				84DD82FD2A55098300A32F64 /* Application */,
+				8479BE122A57A1B600A5FEDF /* Global */,
 				8479BDF42A5591D500A5FEDF /* Network */,
 				8479BE0E2A566B5000A5FEDF /* Domain */,
 				84DD82FE2A5509AA00A32F64 /* Presentation */,
